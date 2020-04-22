@@ -1,6 +1,5 @@
 import * as express from 'express'
 import { Application } from 'express'
-const serverless = require("serverless-http")
 
 class App {
   public app: Application
@@ -34,4 +33,3 @@ class App {
 }
 
 export default App
-module.exports.handler = serverless(App)
