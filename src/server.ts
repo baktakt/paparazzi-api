@@ -5,7 +5,7 @@ import loggerMiddleware from './middleware/logger'
 import CaptureController from './controllers/capture/Capture.controller'
 
 const app = new App({
-  port: 5000,
+  port: process.env.PORT || 3000,
   controllers: [
     new CaptureController()
   ],
