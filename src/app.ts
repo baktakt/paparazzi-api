@@ -1,5 +1,6 @@
 import * as express from 'express'
 import { Application } from 'express'
+const serverless = require("serverless-http")
 
 class App {
   public app: Application
@@ -11,8 +12,6 @@ class App {
 
     this.middlewares(appInit.middleWares)
     this.routes(appInit.controllers)
-    this.assets()
-    this.template()
   }
 
   private middlewares(middleWares: { forEach: (arg0: (middleWare: any) => void) => void; }) {
@@ -27,15 +26,6 @@ class App {
     })
   }
 
-  private assets() {
-    this.app.use(express.static('public'))
-    this.app.use(express.static('views'))
-  }
-
-  private template() {
-    this.app.set('view engine', 'pug')
-  }
-
   public listen() {
     this.app.listen(this.port, () => {
       console.log(`App listening on the http://localhost:${this.port}`)
@@ -44,3 +34,4 @@ class App {
 }
 
 export default App
+module.exports.handler = serverless(App)

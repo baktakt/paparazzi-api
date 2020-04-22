@@ -7,7 +7,7 @@ import CaptureController from './controllers/capture/Capture.controller'
 const app = new App({
   port: 5000,
   controllers: [
-    new CaptureController(),
+    new CaptureController()
   ],
   middleWares: [
     bodyParser.json(),

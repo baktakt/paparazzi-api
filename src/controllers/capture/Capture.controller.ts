@@ -15,7 +15,7 @@ const browserStackCredentials = {
 };
 
 class CaptureController implements IControllerBase {
-  public path = '/'
+  public path = '/capture'
   public router = express.Router()
 
   constructor() {
@@ -23,7 +23,8 @@ class CaptureController implements IControllerBase {
   }
 
   public initRoutes() {
-    this.router.post('/capture', this.captureScreenshot)
+    this.router.post(this.path + '/', this.captureScreenshot)
+    this.router.get(this.path + '/:id', this.getJob)
   }
 
   captureScreenshot = async (req: Request, res: Response) => {
@@ -32,6 +33,18 @@ class CaptureController implements IControllerBase {
       res.send(job);
     }).catch(error => {
       res.status(503).send({ 'message': error.message });
+    })
+  }
+
+  getJob = (req: Request, res: Response) => {
+    const id = req.params.id
+    console.log(id)
+    var screenshotClient = BrowserStack.createScreenshotClient(browserStackCredentials);
+    screenshotClient.getJob(id, (error, job) => {
+      if (error) {
+        res.status(404).send({ 'message': error.message })
+      }
+      res.send(job);
     })
   }
 
