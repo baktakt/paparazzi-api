@@ -38,7 +38,6 @@ class CaptureController implements IControllerBase {
 
   getJob = (req: Request, res: Response) => {
     const id = req.params.id
-    console.log(id)
     var screenshotClient = BrowserStack.createScreenshotClient(browserStackCredentials);
     screenshotClient.getJob(id, (error, job) => {
       if (error) {
@@ -49,23 +48,10 @@ class CaptureController implements IControllerBase {
   }
 
   browserStackCaptureScreenshot = async (captureInput: ICaptureInput) => {
-    var options = {
-      url: captureInput.url,
-      callback_url: captureInput.callbackUrl,
-      browsers: [
-        {
-          os: captureInput.osName,
-          os_version: captureInput.osVersion,
-          browser: captureInput.name,
-          browser_version: captureInput.version
-        },
-      ]
-    };
     var screenshotClient = BrowserStack.createScreenshotClient(browserStackCredentials);
     return new Promise((resolve, reject) => {
-      screenshotClient.generateScreenshots(options, function (error, job) {
+      screenshotClient.generateScreenshots(captureInput, function (error, job) {
         if (error) {
-          console.log(error);
           reject(error);
         }
         resolve(job);

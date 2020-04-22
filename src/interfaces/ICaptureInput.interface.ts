@@ -1,10 +1,9 @@
+import IBrowser from "./IBrowser.interface";
+
 interface ICaptureInput {
-  name: string
-  version: string
-  osName: string
-  osVersion: string
   url: string
-  callbackUrl: string
+  callback_url: string
+  browsers: [IBrowser]
 }
 
 export default ICaptureInput
